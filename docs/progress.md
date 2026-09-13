@@ -5,14 +5,14 @@ Arquivo de acompanhamento do projeto: o que já foi feito, decisões confirmadas
 ## Status atual
 
 - **Fase:** Fase 0 — Setup
-- **Última task concluída:** TASK-002
-- **Próxima task:** TASK-003 — Configurar convenções de testes
+- **Última task concluída:** TASK-003
+- **Próxima task:** TASK-004 — Logging estruturado + configuração via env vars
 
 ## Processo de trabalho (combinado com o time)
 
 1. Tech Lead (Claude) planeja e entrega uma task por vez, no formato TASK-XXX.
-2. Quando a task envolve lógica testável, Claude cria os arquivos de teste no repositório **antes** de entregar a task — o desenvolvedor implementa o código de produção para fazer os testes passarem.
-3. Desenvolvedor implementa e avisa quando terminar.
+2. Tudo que for relacionado a teste é responsabilidade do Tech Lead: arquivos `_test.go` de cada task de domínio (criados **antes** da task ser entregue) e também a própria infraestrutura de testes (convenções, cobertura, CI). O desenvolvedor só escreve código de produção.
+3. Desenvolvedor implementa o código de produção necessário para os testes passarem, e avisa quando terminar.
 4. Claude revisa código, roda testes/build, e aprova (✅) ou reprova (❌) com uma lista objetiva do que corrigir.
 5. Só avança para a próxima task depois de aprovação.
 6. Testes automatizados e mensagens de commit em inglês; conversa e documentação de processo em português.
@@ -33,6 +33,13 @@ Arquivo de acompanhamento do projeto: o que já foi feito, decisões confirmadas
 - README com seção "Development" e link para este progress.md
 - Sem testes automatizados (task de tooling, sem lógica de negócio)
 
+### TASK-003 — Convenções de testes ✅ (aprovada em 2026-09-13, implementada pelo Tech Lead)
+
+- `docs/testing.md` — stdlib `testing` (sem testify), tests no mesmo pacote, padrão table-driven, convenção de build tag `integration` para testes de banco
+- `make test-coverage` — cobertura com `go tool cover -func`
+- `.gitignore` cobrindo `coverage.out`
+- Task de tooling puro sobre testes: implementada diretamente pelo Tech Lead, não pelo dev (ver processo de trabalho acima)
+
 ## Decisões técnicas confirmadas
 
 - Monólito modular, organizado por domínio (vertical slice) em `internal/`
@@ -49,7 +56,7 @@ Detalhe de cada task (objetivo, critérios de aceite, testes, etc.) é entregue 
 
 - [x] TASK-001 — Inicializar módulo Go e estrutura de diretórios
 - [x] TASK-002 — Configurar lint/format (golangci-lint, gofmt) + Makefile
-- [ ] TASK-003 — Configurar convenções de testes (`make test`)
+- [x] TASK-003 — Configurar convenções de testes (`make test`)
 - [ ] TASK-004 — Logging estruturado (slog) + configuração via env vars
 - [ ] TASK-005 — Servidor HTTP mínimo com `/healthz`
 
